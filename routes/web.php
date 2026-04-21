@@ -2,9 +2,16 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CommandeController;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::middleware('auth')->group(function () {
+    Route::resource('commandes', CommandeController::class);
+    Route::get('commandes/{commande}/ticket', [CommandeController::class, 'ticket'])
+         ->name('commandes.ticket');
 });
 
 Route::get('/dashboard', function () {
