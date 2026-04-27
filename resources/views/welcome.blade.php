@@ -23,7 +23,7 @@
         .btn-reserve-nav {
             background: #b8860b; color: #fff; border: none;
             padding: 0.6rem 1.4rem; border-radius: 6px; font-size: 0.9rem;
-            transition: background 0.2s;
+            transition: background 0.2s; text-decoration: none;
         }
         .btn-reserve-nav:hover { background: #9a7009; color: #fff; }
 
@@ -128,7 +128,7 @@
             <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
         </ul>
     </div>
-    <a href="{{ route('commandes.create') }}" class="btn-reserve-nav ms-3">
+    <a href="#" class="btn-reserve-nav ms-3">
         <i class="fa-solid fa-cart-shopping me-1"></i> Réserver une table
     </a>
 </nav>
@@ -142,7 +142,7 @@
             <h1>Le Goût Authentique<br><span>du Sénégal</span></h1>
             <p>Découvrez nos plats traditionnels préparés<br>avec passion et des ingrédients frais.</p>
             <div>
-                <a href="{{ route('commandes.create') }}" class="btn-commander">
+                <a href="#" class="btn-commander">
                     <i class="fa-solid fa-truck"></i> Commander maintenant
                 </a>
                 <a href="#" class="btn-reserver">
@@ -170,8 +170,14 @@
 
         <!-- DROITE : PLAT DU JOUR -->
         <div class="plat-card">
-            @php $menuActif = \App\Models\Menu::where('actif', true)->first(); @endphp
-            @php $platDuJour = \App\Models\Plat::inRandomOrder()->first(); @endphp
+
+            @php
+                try {
+                    $platDuJour = \App\Models\Plat::inRandomOrder()->first();
+                } catch (\Exception $e) {
+                    $platDuJour = null;
+                }
+            @endphp
 
             <div class="plat-icon"><i class="fa-solid fa-bell-concierge"></i></div>
             <div class="plat-label">Plat du jour</div>
@@ -192,7 +198,7 @@
                 <div class="plat-prix">3 500 FCFA</div>
             @endif
 
-            <a href="{{ route('commandes.create') }}" class="btn-cmd-plat">
+            <a href="#" class="btn-cmd-plat">
                 <i class="fa-solid fa-utensils"></i> Commander
             </a>
         </div>
