@@ -15,11 +15,17 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        // 1. D'abord les catégories (les plats en dépendent via categorie_id)
+        $this->call(CategorieSeeder::class);
 
+        // 2. Ensuite les plats
+        $this->call(PlatSeeder::class);
+
+        // 3. Utilisateur de test (admin)
         User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+            'name'     => 'Admin Restaurant',
+            'email'    => 'admin@restaurant.com',
+            'password' => bcrypt('password'),
         ]);
     }
 }
