@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('commandes', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('table_id')->constrained('tables')->onDelete('cascade');
+            $table->foreignId('table_id')->constrained('table_restaurants')->onDelete('cascade');
             $table->enum('statut', ['en_attente', 'en_cours', 'servie', 'payee'])->default('en_attente');
             $table->timestamps();
             $table->softDeletes();
