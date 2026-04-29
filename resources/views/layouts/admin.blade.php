@@ -363,10 +363,10 @@ body { font-family: 'Outfit', sans-serif; background: var(--cream); color: var(-
       <i class="bi bi-eye"></i> Vue client
     </a>
     <div class="nav-user">
-      <div class="avatar">YJ</div>
+      <div class="avatar">{{ strtoupper(substr(auth()->user()->name, 0, 2)) }}</div>
       <div>
-        <div class="nav-user-name">Yayra Joanella</div>
-        <div class="nav-user-role">Groupe B</div>
+        <div class="nav-user-name">{{ auth()->user()->name }}</div>
+        <div class="nav-user-role">{{ ucfirst(auth()->user()->role) }}</div>
       </div>
     </div>
   </div>
@@ -389,6 +389,14 @@ body { font-family: 'Outfit', sans-serif; background: var(--cream); color: var(-
       <a class="nav-link {{ request()->routeIs('admin.menu') ? 'active' : '' }}"
          href="{{ route('admin.menu') }}">
         <i class="bi bi-layout-text-window"></i> Menu client
+      </a>
+      <a class="nav-link {{ request()->routeIs('commandes.*') ? 'active' : '' }}"
+        href="{{ route('commandes.index') }}">
+        <i class="bi bi-receipt"></i> Commandes
+      </a>
+      <a class="nav-link {{ request()->routeIs('commandes.create') ? 'active' : '' }}"
+        href="{{ route('commandes.create') }}">
+        <i class="bi bi-plus-circle-fill"></i> Nouvelle commande
       </a>
     </div>
     <div class="sidebar-section">

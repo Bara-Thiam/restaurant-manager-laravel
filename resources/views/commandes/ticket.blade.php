@@ -1,54 +1,91 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl">Ticket de caisse #{{ $commande->id }}</h2>
-    </x-slot>
+@extends('layouts.admin')
+@section('title', 'Ticket #' . $commande->id)
 
-    <div class="py-6 max-w-lg mx-auto px-4">
-        <div class="border rounded p-6 shadow">
-            {{-- En-tête --}}
-            <h1 class="text-2xl font-bold text-center mb-1">Restaurant</h1>
-            <p class="text-center text-gray-500 mb-4">{{ now()->format('d/m/Y H:i') }}</p>
-            <hr>
+@section('content')
 
-            {{-- Infos commande --}}
-            <p class="mt-3"><strong>Table :</strong> {{ $commande->table->numero }}</p>
-            <p><strong>Serveur :</strong> {{ $commande->user->name }}</p>
-            <hr class="my-3">
+<div class="page-header print:hidden">
+  <h1 class="page-title">Ticket <span>de caisse</span></h1>
+  <div style="display:flex;gap:10px;">
+    <button onclick="window.print()" class="btn-add">
+      <i class="bi bi-printer-fill"></i> Imprimer
+    </button>
+    <a href="{{ route('commandes.show', $commande) }}" class="btn-back">
+      <i class="bi bi-arrow-left"></i> Retour
+    </a>
+  </div>
+</div>
 
-            {{-- Plats --}}
-            <table class="w-full text-sm">
-                <thead>
-                    <tr class="border-b">
-                        <th class="text-left py-1">Plat</th>
-                        <th class="text-center py-1">Qté</th>
-                        <th class="text-right py-1">Sous-total</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @php $total = 0; @endphp
-                    @foreach ($commande->plats as $plat)
-                        @php $sousTotal = $plat->prix * $plat->pivot->quantite; $total += $sousTotal; @endphp
-                        <tr class="border-b">
-                            <td class="py-1">{{ $plat->nom }}</td>
-                            <td class="text-center py-1">{{ $plat->pivot->quantite }}</td>
-                            <td class="text-right py-1">{{ number_format($sousTotal, 0, ',', ' ') }} FCFA</td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
+{{-- Ticket --}}
+<div style="max-width:480px;margin:0 auto;">
+  <div class="form-card" style="font-family:'Outfit',sans-serif;">
 
-            {{-- Total --}}
-            <div class="mt-4 text-right text-lg font-bold">
-                TOTAL : {{ number_format($total, 0, ',', ' ') }} FCFA
-            </div>
-
-            {{-- Bouton imprimer --}}
-            <div class="mt-6 text-center print:hidden">
-                <button onclick="window.print()" 
-                        class="bg-green-600 text-white px-6 py-2 rounded">
-                    Imprimer
-                </button>
-            </div>
-        </div>
+    {{-- En-tête --}}
+    <div style="text-align:center;margin-bottom:24px;">
+      <div style="font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:700;color:var(--gold);">
+        <i class="bi bi-cup-hot-fill"></i> Saveurs du Sénégal
+      </div>
+      <div style="font-size:0.78rem;color:var(--text-soft);letter-spacing:2px;text-transform:uppercase;">
+        Cuisine Authentique
+      </div>
+      <div style="font-size:0.82rem;color:var(--text-soft);margin-top:8px;">
+        {{ now()->format('d/m/Y à H:i') }}
+      </div>
     </div>
-</x-app-layout>
+
+    <div style="border-top:2px dashed var(--border);padding-top:16px;margin-bottom:16px;">
+      <div style="display:flex;justify-content:space-between;font-size:0.85rem;margin-bottom:6px;">
+        <span style="color:var(--text-soft);">Table</span>
+        <span style="font-weight:600;">N° {{ $commande->table->numero }}</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;font-size:0.85rem;margin-bottom:6px;">
+        <span style="color:var(--text-soft);">Serveur</span>
+        <span style="font-weight:600;">{{ $commande->user->name }}</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;font-size:0.85rem;">
+        <span style="color:var(--text-soft);">Commande</span>
+        <span style="font-weight:600;">#{{ str_pad($commande->id, 4, '0', STR_PAD_LEFT) }}</span>
+      </div>
+    </div>
+
+    {{-- Lignes plats --}}
+    <div style="border-top:2px dashed var(--border);padding-top:16px;">
+      @php $total = 0; @endphp
+      @foreach ($commande->plats as $plat)
+        @php $sousTotal = $plat->prix * $plat->pivot->quantite; $total += $sousTotal; @endphp
+        <div style="display:grid;grid-template-columns:1fr 40px 120px;gap:8px;
+                    padding:8px 0;border-bottom:1px solid var(--border);font-size:0.85rem;">
+          <span style="font-weight:500;">{{ $plat->nom }}</span>
+          <span style="text-align:center;color:var(--text-soft);">x{{ $plat->pivot->quantite }}</span>
+          <span style="text-align:right;color:var(--gold);font-weight:600;">
+            {{ number_format($sousTotal, 0, ',', ' ') }} F
+          </span>
+        </div>
+      @endforeach
+    </div>
+
+    {{-- Total --}}
+    <div style="border-top:2px solid var(--gold);margin-top:16px;padding-top:16px;
+                display:flex;justify-content:space-between;align-items:center;">
+      <span style="font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:700;">TOTAL</span>
+      <span style="font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:700;color:var(--gold);">
+        {{ number_format($total, 0, ',', ' ') }} FCFA
+      </span>
+    </div>
+
+    <div style="text-align:center;margin-top:24px;font-size:0.78rem;color:var(--text-soft);
+                border-top:2px dashed var(--border);padding-top:16px;">
+      Merci de votre visite !<br>
+      <i class="bi bi-heart-fill" style="color:var(--bordeaux);"></i>
+    </div>
+
+  </div>
+</div>
+
+<style>
+@media print {
+  .topnav, .sidebar, .page-header, .btn-back { display: none !important; }
+  .main { padding: 0 !important; }
+}
+</style>
+
+@endsection
