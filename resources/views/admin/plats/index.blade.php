@@ -66,8 +66,26 @@
   @endforelse
 </div>
 
-<div style="margin-top:20px;">
-  {{ $plats->links() }}
+<div style="margin-top:20px;display:flex;gap:6px;align-items:center;">
+    @if($plats->onFirstPage())
+        <span style="padding:7px 14px;border-radius:8px;border:1px solid var(--border);color:var(--text-soft);font-size:0.82rem;">« Précédent</span>
+    @else
+        <a href="{{ $plats->previousPageUrl() }}" style="padding:7px 14px;border-radius:8px;border:1px solid var(--gold-light);color:var(--gold);font-size:0.82rem;text-decoration:none;">« Précédent</a>
+    @endif
+
+    @foreach($plats->getUrlRange(1, $plats->lastPage()) as $page => $url)
+        @if($page == $plats->currentPage())
+            <span style="padding:7px 12px;border-radius:8px;background:var(--gold);color:white;font-size:0.82rem;font-weight:600;">{{ $page }}</span>
+        @else
+            <a href="{{ $url }}" style="padding:7px 12px;border-radius:8px;border:1px solid var(--border);color:var(--text-soft);font-size:0.82rem;text-decoration:none;">{{ $page }}</a>
+        @endif
+    @endforeach
+
+    @if($plats->hasMorePages())
+        <a href="{{ $plats->nextPageUrl() }}" style="padding:7px 14px;border-radius:8px;border:1px solid var(--gold-light);color:var(--gold);font-size:0.82rem;text-decoration:none;">Suivant »</a>
+    @else
+        <span style="padding:7px 14px;border-radius:8px;border:1px solid var(--border);color:var(--text-soft);font-size:0.82rem;">Suivant »</span>
+    @endif
 </div>
 
 @endsection

@@ -21,11 +21,15 @@ class DatabaseSeeder extends Seeder
         // 2. Ensuite les plats
         $this->call(PlatSeeder::class);
 
+        // 3. Ensuite les tables de restaurant
+        $this->call(TableRestaurantSeeder::class);
+
         // 3. Utilisateur de test (admin)
         User::factory()->create([
             'name'     => 'Admin Restaurant',
             'email'    => 'admin@restaurant.com',
             'password' => bcrypt('password'),
+            'role'     => 'admin',
         ]);
     }
 }

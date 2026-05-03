@@ -28,7 +28,7 @@ class CommandeController extends Controller
             'table_id'               => 'required|exists:table_restaurants,id',
             'plats'                  => 'required|array',
             'plats.*.id'             => 'required|exists:plats,id',
-            'plats.*.quantite'       => 'required|integer|min:1',
+            'plats.*.quantite'       => 'nullable|integer|min:0',
         ]);
 
         $commande = Commande::create([

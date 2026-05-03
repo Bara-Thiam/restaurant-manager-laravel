@@ -47,4 +47,10 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin'])->grou
     Route::resource('menus', MenuController::class);
 });
 
+Route::middleware('auth')->get('/admin/menu', [MenuController::class, 'clientView'])->name('admin.menu');
+
+Route::get('/reserver', fn() => view('reserver'))->name('reserver');
+Route::get('/a-propos', fn() => view('a-propos'))->name('a-propos');
+Route::get('/contact',  fn() => view('contact'))->name('contact');
+
 require __DIR__.'/auth.php';

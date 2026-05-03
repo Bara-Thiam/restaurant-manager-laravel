@@ -52,7 +52,7 @@
               <span class="prix">{{ number_format($plat->prix, 0, ',', ' ') }} FCFA</span>
               <input type="number"
                      name="plats[{{ $index }}][quantite]"
-                     min="0" value="0"
+                     min="0" value="{{ request('plat_id') == $plat->id ? 1 : 0 }}"
                      class="form-input" style="width:70px;text-align:center;padding:8px;">
             </div>
           </div>

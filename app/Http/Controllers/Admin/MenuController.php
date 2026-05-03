@@ -86,4 +86,10 @@ class MenuController extends Controller
         return redirect()->route('admin.menus.archives')
                          ->with('success', 'Menu restauré.');
     }
+
+    public function clientView()
+    {
+        $categories = \App\Models\Categorie::with('plats')->get();
+        return view('admin.menus.client', compact('categories'));
+    }
 }

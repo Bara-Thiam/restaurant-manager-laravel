@@ -359,16 +359,40 @@ body { font-family: 'Outfit', sans-serif; background: var(--cream); color: var(-
     </div>
   </a>
   <div style="display:flex;align-items:center;gap:20px;">
-    <a href="{{ route('admin.menu') }}" class="btn-vue-client">
-      <i class="bi bi-eye"></i> Vue client
+    <a href="{{ url('/') }}" class="btn-vue-client">
+        <i class="bi bi-eye"></i> Vue client
     </a>
-    <div class="nav-user">
-      <div class="avatar">{{ strtoupper(substr(auth()->user()->name, 0, 2)) }}</div>
-      <div>
-        <div class="nav-user-name">{{ auth()->user()->name }}</div>
-        <div class="nav-user-role">{{ ucfirst(auth()->user()->role) }}</div>
+      <div class="nav-user" onclick="toggleDropdown()" style="cursor:pointer;position:relative;">
+        <div class="avatar">{{ strtoupper(substr(auth()->user()?->name ?? 'U', 0, 2)) }}</div>
+        <div>
+          <div class="nav-user-name">{{ auth()->user()?->name ?? '' }}</div>
+          <div class="nav-user-role">{{ ucfirst(auth()->user()?->role ?? '') }}
+</div>
+        </div>
+        <i class="bi bi-chevron-down" style="font-size:0.7rem;color:var(--gold);margin-left:4px;"></i>
+
+        {{-- Dropdown --}}
+        <div id="user-dropdown" style="
+          display:none;position:absolute;top:calc(100% + 10px);right:0;
+          background:white;border:1px solid var(--border);border-radius:12px;
+          box-shadow:0 8px 24px rgba(0,0,0,0.12);min-width:180px;z-index:999;
+          overflow:hidden;">
+          <div style="padding:12px 16px;border-bottom:1px solid var(--border);background:var(--gold-pale);">
+            <div style="font-size:0.82rem;font-weight:600;color:var(--text);">{{ auth()->user()?->name ?? '' }}</div>
+            <div style="font-size:0.72rem;color:var(--gold);">{{ ucfirst(auth()->user()?->role ?? '') }}</div>
+          </div>
+          <form method="POST" action="{{ route('logout') }}">
+            @csrf
+            <button type="submit" style="
+              width:100%;padding:12px 16px;background:none;border:none;
+              display:flex;align-items:center;gap:10px;cursor:pointer;
+              color:var(--red);font-family:'Outfit',sans-serif;font-size:0.85rem;
+              font-weight:500;transition:background 0.15s;">
+              <i class="bi bi-box-arrow-right"></i> Se déconnecter
+            </button>
+          </form>
+        </div>
       </div>
-    </div>
   </div>
 </nav>
 
@@ -443,6 +467,17 @@ function previewImage(input, previewId) {
   };
   reader.readAsDataURL(file);
 }
+
+function toggleDropdown() {
+  const d = document.getElementById('user-dropdown');
+  d.style.display = d.style.display === 'none' ? 'block' : 'none';
+}
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.nav-user')) {
+    const d = document.getElementById('user-dropdown');
+    if (d) d.style.display = 'none';
+  }
+});
 </script>
 </body>
 </html>
