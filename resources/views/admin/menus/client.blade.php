@@ -246,8 +246,11 @@
 </div>
 
 <script>
+let currentPlatId = null;
+
 function openPlatModal(card) {
-    const modal = document.getElementById('platModal');
+    currentPlatId = card.dataset.id; // mémorise l'id pour Commander
+
     document.getElementById('modalPlatNom').textContent = card.dataset.nom;
     document.getElementById('modalPlatDesc').textContent = card.dataset.desc;
     document.getElementById('modalPlatPrix').textContent = card.dataset.prix;
@@ -264,7 +267,7 @@ function openPlatModal(card) {
         placeholderEl.style.display = 'flex';
     }
 
-    modal.style.display = 'flex';
+    document.getElementById('platModal').style.display = 'flex';
     document.body.style.overflow = 'hidden';
 }
 
@@ -273,18 +276,13 @@ function closePlatModal() {
     document.body.style.overflow = '';
 }
 
-let currentPlatId = null;
-
-function openPlatModal(card) {
-    currentPlatId = card.dataset.id; // ← on mémorise l'id
-}
-
 function addToCartFromModal() {
     window.location.href = '{{ route("commandes.create") }}' + '?plat_id=' + currentPlatId;
 }
 
 document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('platModal').addEventListener('click', closePlatModal);
+
     document.querySelectorAll('.plat-card').forEach(card => {
         card.addEventListener('click', function(e) {
             if (e.target.closest('.btn-commander')) {

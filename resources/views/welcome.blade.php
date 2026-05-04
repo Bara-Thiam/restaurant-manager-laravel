@@ -247,7 +247,7 @@
         <ul class="navbar-nav">
             <li class="nav-item"><a class="nav-link active" href="{{ url('/') }}">Accueil</a></li>
             <li class="nav-item"><a class="nav-link" href="{{ route('admin.menu') }}">Menu</a></li>
-            <li class="nav-item"><a class="nav-link" href="{{ route('a-propos') }}">À propos</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ route('reserver') }}">Réserver</a></li>
             <li class="nav-item"><a class="nav-link" href="{{ route('commandes.create') }}">Commander</a></li>
             <li class="nav-item"><a class="nav-link" href="{{ route('a-propos') }}">À propos</a></li>
             <li class="nav-item"><a class="nav-link" href="{{ route('contact') }}">Contact</a></li>
