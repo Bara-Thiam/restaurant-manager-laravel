@@ -119,7 +119,7 @@ DB_USERNAME=root
 DB_PASSWORD=
 ```
 
-> ⚠️ **Important :** Créer la base de données `restaurant` dans phpMyAdmin avant de continuer.
+> ⚠️ **Important :** Créer la base de données `restaurant_db` dans phpMyAdmin avant de continuer.
 
 ```bash
 # 5. Migrer et seeder la base de données
