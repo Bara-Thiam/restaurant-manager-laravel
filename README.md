@@ -267,8 +267,8 @@ commande_plat
 | | Membre | Responsabilités |
 |--|--------|-----------------|
 | 👨‍💻 | **Sereigne Bara Thiam** | Auth · Rôles · Middleware · Commandes · Ticket · Architecture |
-| 👨‍💻 | **Mactar Camara** | Plats · Catégories · Upload images · Seeders |
-| 👩‍💻 | **Joanelle Kotiko** | Tables · Menus · Interface client · Soft delete |
+| 👨‍💻 | **Mouhamdou Mactar Camara** | Plats · Catégories · Upload images · Seeders |
+| 👩‍💻 | **Yayra Joienella Aholou-Kotiko** | Tables · Menus · Interface client · Soft delete |
 
 </div>
 
